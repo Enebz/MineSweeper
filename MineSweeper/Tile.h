@@ -1,41 +1,44 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 
 class Tile {
 
 private:
-	int type;
+	int type = 11;
 	bool shown = false;
 	bool flagged = false;
 	bool error = false;
 
+	sf::RectangleShape display_tile;
+
 	std::map<int, sf::IntRect> tile_texture_boundaries = {
-		{1, sf::IntRect(0, 0, 16, 16)},
-		{2, sf::IntRect(16, 0, 16, 16)},
-		{3, sf::IntRect(0, 16, 16, 16)},
-		{4, sf::IntRect(16, 16, 16, 16)},
-		{5, sf::IntRect(0, 32, 16, 16)},
-		{6, sf::IntRect(16, 32, 16, 16)},
-		{7, sf::IntRect(0, 48, 16, 16)},
-		{8, sf::IntRect(16, 48, 16, 16)},
-		{0, sf::IntRect(32, 16, 16, 16)}, // Open
-		{10, sf::IntRect(32, 0, 16, 16)}, // Bomb
-		{11, sf::IntRect(48, 0, 16, 16)}, // No texture
-		{12, sf::IntRect(32, 32, 16, 16)}, // Unchecked
-		{13, sf::IntRect(32, 48, 16, 16)}, // Flag
-	};	
+		// Types
+		{1, sf::IntRect(0, 0, 127, 127)},
+		{2, sf::IntRect(128, 0, 127, 127)},
+		{3, sf::IntRect(0, 128, 127, 127)},
+		{4, sf::IntRect(128, 128, 127, 127)},
+		{5, sf::IntRect(0, 256, 127, 127)},
+		{6, sf::IntRect(128, 256, 127, 127)},
+		{7, sf::IntRect(0, 384, 127, 127)},
+		{8, sf::IntRect(128, 384, 127, 127)},
+		{0, sf::IntRect(256, 128, 127, 127)}, // Open
+		{10, sf::IntRect(256, 0, 127, 127)}, // Bomb
+		{11, sf::IntRect(384, 0, 127, 127)}, // Unset
+
+		// States
+		{12, sf::IntRect(256, 256, 127, 127)}, // Unchecked
+		{13, sf::IntRect(256, 384, 127, 127)}, // Flag
+	};
 
 public:
 
-	sf::Vector2i position;
+	sf::Vector2i index;
 
-	Tile() {
-
+	Tile(void) {
 	}
 
-	Tile(int type, sf::Vector2i position) {
+	Tile(int type, sf::Vector2i index) {
 		this->type = type;
-		this->position = position;
+		this->index = index;
 	}
 
 	void setType(int type) {
@@ -52,6 +55,10 @@ public:
 
 	bool isFlagged() {
 		return this->flagged;
+	}
+
+	bool isUnset() {
+		return type == 11;
 	}
 
 	bool isEmpty() {
@@ -83,12 +90,11 @@ public:
 		shown = true;
 	}
 
-	void render(sf::RenderWindow& window, sf::Vector2f size, sf::Vector2f position, sf::Texture textures) {
-		sf::RectangleShape display_tile;
-		display_tile.setSize(size);
-		display_tile.setPosition(position);
+	void render(sf::RenderWindow& window, int size, sf::Vector2i position, sf::Texture &textures) {
+		display_tile.setSize(sf::Vector2f(size, size));
+		display_tile.setPosition((sf::Vector2f) position);
 		display_tile.setTexture(&textures);
-		
+
 		if (shown) {
 			display_tile.setTextureRect(tile_texture_boundaries.at(type));
 		}
@@ -100,13 +106,6 @@ public:
 		else {
 			display_tile.setTextureRect(tile_texture_boundaries.at(12));
 		}
-
-		
-		
-		
 		window.draw(display_tile);
 	}
-
-
-
 };

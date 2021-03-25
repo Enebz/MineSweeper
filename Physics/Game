@@ -1,14 +1,11 @@
 #pragma once
 
+#pragma once
+
 #include "Minesweeper.h"
 #include "Controls.h"
 
 class Game {
-
-private:
-    int width = 50;
-    int height = 25;
-    int bombs = std::floor((width * height) / 8);
 
 public:
     sf::RenderWindow window;
@@ -16,6 +13,9 @@ public:
 
     sf::Texture textures;
 
+    int width = 50;
+    int height = 25;
+    int bombs = std::floor((width*height)/8);
     int tileSize = 32;
     int headerSize = 64;
 
@@ -24,29 +24,6 @@ public:
 
     Game()
     {
-        int in_width;
-        int in_height;
-        int in_bombs;
-
-        std::cout << "Width: ";
-        std::cin >> in_width;
-        std::cout << std::endl;
-
-        std::cout << "Height: ";
-        std::cin >> in_height;
-        std::cout << std::endl;
-
-        std::cout << "Bombs: ";
-        std::cin >> in_bombs;
-        std::cout << std::endl;
-
-        if (bombs > in_width* in_height) {
-            bombs = in_width * in_height - 1;
-        }
-
-        this->width = in_width;
-        this->height = in_height;
-        this->bombs = in_bombs;
         // Set visible area
         visibleArea = sf::FloatRect(0, 0, tileSize * width, tileSize * height + headerSize);
 
@@ -103,8 +80,8 @@ public:
 
     void render() {
         window.clear(sf::Color(100, 100, 100));
-        controls.render(window);
-        minesweeper.render(window);
+        
+
         window.display();
     }
 };
