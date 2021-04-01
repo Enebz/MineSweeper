@@ -16,7 +16,7 @@ This is the default one. Download and edit it as you wish.
 
 ## Download
 I am not updating this, so I reccomend you to build the project yourself.
-Download the minesweeper [here](https://drive.google.com/file/d/1HgvEMl8AoJ4BHrSuOIv1tClAHIlDldFM/view?usp=sharing).
+Download the minesweeper [here](https://github.com/Enebz/MineSweeper/archive/refs/tags/1.0.zip).
 
 ## Build
 I built this with Visual Studio, however you may build this in whatever way you want.
